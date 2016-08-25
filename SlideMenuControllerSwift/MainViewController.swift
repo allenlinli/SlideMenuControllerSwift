@@ -46,7 +46,7 @@ extension MainViewController : UITableViewDataSource {
     }
      
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier(DataTableViewCell.identifier) as! DataTableViewCell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: DataTableViewCell.identifier) as! DataTableViewCell
         let data = DataTableViewCellData(imageUrl: "dummy", text: mainContens[indexPath.row])
         cell.setData(data)
         return cell
@@ -54,7 +54,7 @@ extension MainViewController : UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let storyboard = UIStoryboard(name: "SubContentsViewController", bundle: nil)
-        let subContentsVC = storyboard.instantiateViewControllerWithIdentifier("SubContentsViewController") as! SubContentsViewController
+        let subContentsVC = storyboard.instantiateViewController(withIdentifier: "SubContentsViewController") as! SubContentsViewController
         self.navigationController?.pushViewController(subContentsVC, animated: true)
     }
 }
