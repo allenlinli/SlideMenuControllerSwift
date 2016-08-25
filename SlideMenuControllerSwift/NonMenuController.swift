@@ -18,11 +18,12 @@ class NonMenuController: UIViewController {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.removeNavigationBarItem()
     }
   
+    /*
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         coordinator.animate(alongsideTransition: nil, completion: { (context: UIViewControllerTransitionCoordinatorContext!) -> Void in
@@ -35,8 +36,9 @@ class NonMenuController: UIViewController {
             }
         })
     }
+     */
   
     @IBAction func didTouchToMain(sender: UIButton) {
-        delegate?.changeViewController(LeftMenu.Main)
+        delegate?.changeViewController(menu: LeftMenu.Main)
     }
 }

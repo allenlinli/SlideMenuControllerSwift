@@ -52,13 +52,13 @@ class LeftViewController : UIViewController, LeftMenuProtocol {
         nonMenuController.delegate = self
         self.nonMenuViewController = UINavigationController(rootViewController: nonMenuController)
         
-        self.tableView.registerCellClass(BaseTableViewCell.self)
+        self.tableView.registerCellClass(cellClass: BaseTableViewCell.self)
         
         self.imageHeaderView = ImageHeaderView.loadNib()
         self.view.addSubview(self.imageHeaderView)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
@@ -85,7 +85,7 @@ class LeftViewController : UIViewController, LeftMenuProtocol {
 }
 
 extension LeftViewController : UITableViewDelegate {
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let menu = LeftMenu(rawValue: indexPath.item) {
             switch menu {
             case .Main, .Swift, .Java, .Go, .NonMenu:
@@ -98,26 +98,26 @@ extension LeftViewController : UITableViewDelegate {
 
 extension LeftViewController : UITableViewDataSource {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menus.count
     }
-
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let menu = LeftMenu(rawValue: indexPath.item) {
             switch menu {
             case .Main, .Swift, .Java, .Go, .NonMenu:
                 let cell = BaseTableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: BaseTableViewCell.identifier)
-                cell.setData(menus[indexPath.row])
+                cell.setData(data: menus[indexPath.row])
                 return cell
             }
         }
         return UITableViewCell()
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    private func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let menu = LeftMenu(rawValue: indexPath.item) {
-            self.changeViewController(menu)
+            self.changeViewController(menu: menu)
         }
     }
 }
@@ -125,7 +125,7 @@ extension LeftViewController : UITableViewDataSource {
 extension LeftViewController: UIScrollViewDelegate {
     
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if self.tableView == scrollView {
             
         }

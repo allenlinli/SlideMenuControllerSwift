@@ -187,16 +187,17 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
         edgesForExtendedLayout = UIRectEdge()
     }
     
-    open override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        if let mainController = self.mainViewController{
-            return mainController.supportedInterfaceOrientations
-        }
-        return UIInterfaceOrientationMask.all
-    }
+//    open func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+//        if let mainController = self.mainViewController{
+//            return mainController.supportedInterfaceOrientations
+//        }
+//        return UIInterfaceOrientationMask.all
+//    }
     
-    open override func shouldAutorotate() -> Bool {
-        return mainViewController?.shouldAutorotate ?? false
-    }
+    
+//    open func shouldAutorotate() -> Bool {
+//        return mainViewController?.shouldAutorotate ?? false
+//    }
         
     open override func viewWillLayoutSubviews() {
         // topLayoutGuideの値が確定するこのタイミングで各種ViewControllerをセットする
@@ -967,10 +968,8 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
     
     fileprivate func isLeftPointContainedWithinBezelRect(_ point: CGPoint) -> Bool{
         if let bezelWidth = SlideMenuOptions.leftBezelWidth {
-            var leftBezelRect: CGRect = CGRect.zero
-            var tempRect: CGRect = CGRect.zero
         
-            CGRectDivide(view.bounds, &leftBezelRect, &tempRect, bezelWidth, CGRectEdge.minXEdge)
+            let (leftBezelRect, _) = view.bounds.divided(atDistance: bezelWidth, from: .minXEdge)
             return leftBezelRect.contains(point)
         } else {
             return true
@@ -989,11 +988,9 @@ open class SlideMenuController: UIViewController, UIGestureRecognizerDelegate {
     
     fileprivate func isRightPointContainedWithinBezelRect(_ point: CGPoint) -> Bool {
         if let rightBezelWidth = SlideMenuOptions.rightBezelWidth {
-            var rightBezelRect: CGRect = CGRect.zero
-            var tempRect: CGRect = CGRect.zero
             let bezelWidth: CGFloat = view.bounds.width - rightBezelWidth
         
-            CGRectDivide(view.bounds, &tempRect, &rightBezelRect, bezelWidth, CGRectEdge.minXEdge)
+            let (_, rightBezelRect) = view.bounds.divided(atDistance: bezelWidth, from: .minXEdge)
         
             return rightBezelRect.contains(point)
         } else {

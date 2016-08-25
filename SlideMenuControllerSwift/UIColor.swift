@@ -17,7 +17,7 @@ extension UIColor {
     convenience init(hex: String, alpha: CGFloat) {
         var hexWithoutSymbol = hex
         if hexWithoutSymbol.hasPrefix("#") {
-            hexWithoutSymbol = hex.substring(1)
+            hexWithoutSymbol = String(hex.characters.dropFirst())
         }
         
         let scanner = Scanner(string: hexWithoutSymbol)
